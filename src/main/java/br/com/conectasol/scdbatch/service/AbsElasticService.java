@@ -50,7 +50,11 @@ public abstract class AbsElasticService {
 	}
 
 	protected String doGet(final RestClient client, StringBuilder jBuilder, String index) throws IOException {
-		HttpEntity entity = new NStringEntity(jBuilder.toString(), ContentType.APPLICATION_JSON);
+		return doGet(client, jBuilder.toString(), index);
+	}
+
+	protected String doGet(final RestClient client, String jBuilder, String index) throws IOException {
+		HttpEntity entity = new NStringEntity(jBuilder, ContentType.APPLICATION_JSON);
 //		request.setEntity(entity);
 		Response response = client.performRequest("GET", String.format("%s/%s", index, "_search"), Collections.emptyMap(), entity);
 		return EntityUtils.toString(response.getEntity());

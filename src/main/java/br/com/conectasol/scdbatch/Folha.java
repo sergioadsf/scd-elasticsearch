@@ -8,7 +8,7 @@ import br.com.conctasol.annotation.MIndex;
 public class Folha {
 
 	
-	@MField(name = "ano_mes", type = "text")
+	@MField(name = "ano_mes", type = "keyword")
 	private String anoMes;
 
 	@MField(name = "codigo_orgao", type = "integer", index = false)
