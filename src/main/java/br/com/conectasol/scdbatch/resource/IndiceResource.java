@@ -1,9 +1,9 @@
 package br.com.conectasol.scdbatch.resource;
 
 import java.io.IOException;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +20,7 @@ public class IndiceResource {
 	private IndiceService criarIndiceService;
 	
 	@PostMapping("/{nome}")
-	public void criarIndice(String nome, @RequestBody Map<String, Object> mapping) {
+	public void criarIndice(@PathVariable String nome, @RequestBody String mapping) {
 		try {
 			criarIndiceService.criar(nome, mapping);
 		} catch (IOException | CriarIndiceException e) {

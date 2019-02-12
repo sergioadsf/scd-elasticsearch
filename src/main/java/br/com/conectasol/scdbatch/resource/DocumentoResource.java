@@ -21,10 +21,9 @@ public class DocumentoResource {
 	@PostMapping("/{nome}")
 	public void criarIndice(String nome, @RequestBody String json) {
 		try {
-			documentoService.bulk(nome, json);
+			this.documentoService.bulk(nome, json);
 		} catch (IOException | CriarIndiceException e) {
 			e.printStackTrace();
 		}
 	}
-	
 }

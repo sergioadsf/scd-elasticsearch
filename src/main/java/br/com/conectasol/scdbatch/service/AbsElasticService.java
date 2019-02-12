@@ -1,6 +1,8 @@
 package br.com.conectasol.scdbatch.service;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Collections;
 import java.util.concurrent.ThreadPoolExecutor;
 
@@ -14,6 +16,10 @@ import org.elasticsearch.client.Response;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestClientBuilder;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.transport.TransportAddress;
+import org.elasticsearch.transport.client.PreBuiltTransportClient;
 
 import br.com.conectasol.scdbatch.util.CloseUtil;
 
@@ -33,6 +39,12 @@ public abstract class AbsElasticService {
 				}).setMaxRetryTimeoutMillis(TIMEOUT);
 	}
 
+	@SuppressWarnings("resource")
+	protected TransportClient createTConnection() throws UnknownHostException {
+		return new PreBuiltTransportClient(Settings.EMPTY)
+		        .addTransportAddress(new TransportAddress(InetAddress.getByName("localhost"), 9200));
+	}
+
 	protected RestClient openConnection() {
 		return this.createConnection().build();
 	}
@@ -41,6 +53,10 @@ public abstract class AbsElasticService {
 		return new RestHighLevelClient(this.createConnection());
 	}
 
+	protected void close(TransportClient client) {
+		CloseUtil.close(client);
+	}
+	
 	protected void close(RestClient client) {
 		CloseUtil.close(client);
 	}

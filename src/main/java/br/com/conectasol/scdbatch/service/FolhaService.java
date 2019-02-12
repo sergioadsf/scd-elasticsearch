@@ -9,15 +9,16 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.conctasol.annotation.MIndex;
-import br.com.conectasol.scdbatch.Folha;
 import br.com.conectasol.scdbatch.elastic.model.RequestSearchList;
 import br.com.conectasol.scdbatch.elastic.model.RequestSearchList.QueryType;
+import br.com.conectasol.scdbatch.model.Folha;
+import br.com.conectasol.scdbatch.model.FolhaTipo;
 import br.com.conectasol.scdbatch.service.exception.CriarIndiceException;
 
 @Service
 public class FolhaService extends AbsElasticService {
 
-	public String consultar(String campo, String valor) throws IOException, CriarIndiceException {
+	public String consultarServidor(String campo, String valor) throws IOException, CriarIndiceException {
 
 		RestClient client = null;
 
@@ -36,12 +37,12 @@ public class FolhaService extends AbsElasticService {
 	}
 
 	@SuppressWarnings("unchecked")
-	public String listarAgregacoes(String campo, String valor) throws IOException, CriarIndiceException {
-
-		String json = this.consultar(campo, valor);
+	public String listarAgregacoes(String strTipo, String valor) throws IOException, CriarIndiceException {
+		String nomeCampo = FolhaTipo.valueOf(strTipo).getNomeCampo();
+		String json = this.consultarServidor(nomeCampo, valor);
 		HashMap<String, Object> map = new ObjectMapper().readValue(json, HashMap.class);
 		HashMap<String, Object> mapAggs = (HashMap<String, Object>) map.get("aggregations");
-		HashMap<String, Object> mapCampo = (HashMap<String, Object>) mapAggs.get(campo);
+		HashMap<String, Object> mapCampo = (HashMap<String, Object>) mapAggs.get(nomeCampo);
 		return new ObjectMapper().writeValueAsString(mapCampo.get("buckets"));
 	}
 

@@ -18,9 +18,8 @@ public class FolhaResource {
 	private FolhaService folhaService;
 
 	@GetMapping
-	public String listar(String campo, String valor) throws IOException, CriarIndiceException {
-		// "nome_servidor"
-		return folhaService.listarAgregacoes(campo, valor);
+	public String listar(String tipo, String valor) throws IOException, CriarIndiceException {
+		return folhaService.listarAgregacoes(tipo, valor);
 	}
 
 }
