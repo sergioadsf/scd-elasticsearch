@@ -26,9 +26,6 @@ public class IndiceService extends AbsElasticService {
 				throw new CriarIndiceException(String.format("Indice %s já existe!", nome));
 			}
 			
-//			HashMap<String,Object> mapping =
-//			        new ObjectMapper().readValue(json, new TypeReference<Map<String, Object>>(){});
-			
 			request = new CreateIndexRequest(nome);
 			
 			request.settings(Settings.builder().put("index.number_of_shards", 3).put("index.number_of_replicas", 2));

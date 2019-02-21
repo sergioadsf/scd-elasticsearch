@@ -43,12 +43,13 @@ public class CorsFilter implements Filter {
 		
 	}
 	
-	@Override
 	public void destroy() {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void init(FilterConfig arg0) throws ServletException {
+		throw new UnsupportedOperationException();
 	}
 
 }

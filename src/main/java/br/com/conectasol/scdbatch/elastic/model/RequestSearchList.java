@@ -9,12 +9,10 @@ public class RequestSearchList {
 	}
 
 	private ElasticJsonBuilder esb;
-//	private StringBuilder sb;
 
 	private RequestSearchList(int size) {
 		this.esb = new ElasticJsonBuilder();
 		this.esb.key("size", size).comma();
-//		this.sb = new StringBuilder("\"size\": ").append(size).append(",");
 	}
 
 	public static final RequestSearchList start() {
@@ -45,26 +43,6 @@ public class RequestSearchList {
 		this.esb.closeQuotes();
 		return this;
 	}
-	
-//	public RequestSearchList addQuery(QueryType type, String field, String value) {
-//		sb.append("\"query\": {")
-//		.append("\"").append(type.name().toLowerCase()).append("\"").append(":{")
-//		.append("\"").append(field).append("\"").append(":").append("\"").append(value).append("\"")
-//		.append("}")
-//		.append("},");
-//		return this;
-//	}
-//	
-//	public RequestSearchList addAggs(String field) {
-//		sb.append("\"aggs\": {")
-//		.append("\"").append(field).append("\"").append(":{")
-//		.append("\"").append("terms").append("\"").append(":{")
-//		.append("\"").append("field").append("\"").append(":").append("\"").append(field).append(".keyword").append("\"")
-//		.append("}")
-//		.append("}")
-//		.append("}");
-//		return this;
-//	}
 	
 	public String build() {
 		StringBuilder json = new StringBuilder("{");

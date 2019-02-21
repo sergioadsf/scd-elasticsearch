@@ -3,31 +3,31 @@ package br.com.conectasol.scdbatch.util;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+
+import org.apache.log4j.Logger;
 
 public class UTF8ToAnsiUtils {
+
+	private UTF8ToAnsiUtils() {
+	}
 
 	public static final String UTF8_BOM = "\uFEFF";
 
 	public static void convert(String... filepath) {
-		FileInputStream fis = null;
-		BufferedReader r = null;
-		FileOutputStream fos = null;
-		Writer w = null;
-		try {
-			BufferedInputStream in = new BufferedInputStream(new URL(filepath[0]).openStream());
-//			URL url = new URL(filepath[0]);
+		try (
+				BufferedInputStream in = new BufferedInputStream(new URL(filepath[0]).openStream());
+				BufferedReader r = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
+				FileOutputStream fos = new FileOutputStream(filepath[1]);
+				Writer w = new BufferedWriter(new OutputStreamWriter(fos, StandardCharsets.UTF_8));) {
 			boolean firstLine = true;
-//			fis = new FileInputStream(url.getFile());
-			r = new BufferedReader(new InputStreamReader(in, "UTF8"));
-			fos = new FileOutputStream(filepath[1]);
-			w = new BufferedWriter(new OutputStreamWriter(fos, "UTF8"));
-			for (String s = ""; (s = r.readLine()) != null;) {
+			String s = "";
+			while ((s = r.readLine()) != null) {
 				if (firstLine) {
 					s = UTF8ToAnsiUtils.removeUTF8BOM(s);
 					firstLine = false;
@@ -37,9 +37,7 @@ public class UTF8ToAnsiUtils {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			CloseUtil.close(fis, r, fos, w);
+			Logger.getRootLogger().error(e.getMessage(), e);
 		}
 	}
 

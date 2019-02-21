@@ -18,7 +18,7 @@ import br.com.conectasol.scdbatch.service.exception.CriarIndiceException;
 @Service
 public class FolhaService extends AbsElasticService {
 
-	public String consultarServidor(String campo, String valor) throws IOException, CriarIndiceException {
+	public String consultarServidor(String campo, String valor) throws IOException {
 
 		RestClient client = null;
 
@@ -29,7 +29,6 @@ public class FolhaService extends AbsElasticService {
 					RequestSearchList.start().addQuery(QueryType.MATCH_PHRASE, campo, valor).addAggs(campo).build(),
 					mIndex.name());
 		} catch (Exception e) {
-			e.printStackTrace();
 			return null;
 		} finally {
 			this.close(client);

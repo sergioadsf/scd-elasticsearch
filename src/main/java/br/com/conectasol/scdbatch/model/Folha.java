@@ -201,15 +201,4 @@ public class Folha {
 		this.valorproventomes = valorproventomes;
 	}
 
-//	@Override
-//	public String toString() {
-//		return "Folha [anoMes=" + anoMes + ", codOrgao=" + codOrgao + ", nomeCargoSecundario=" + nomeCargoSecundario
-//				+ ", simboloCargoSecundario=" + simboloCargoSecundario + ", nivelSalarialSecundario="
-//				+ nivelSalarialSecundario + ", simboloCargo=" + simboloCargo + ", nomeCargo=" + nomeCargo
-//				+ ", nivelSalarial=" + nivelSalarial + ", orgao=" + orgao + ", nomeServidor=" + nomeServidor
-//				+ ", valorCorteTeto=" + valorCorteTeto + ", valorDecimoTerceiro=" + valorDecimoTerceiro
-//				+ ", valorDemaisDescontos=" + valorDemaisDescontos + ", valorFerias=" + valorFerias + ", valorLiquido="
-//				+ valorLiquido + ", valorProvento=" + valorProvento + ", valorproventomes=" + valorproventomes + "]";
-//	}
-
 }

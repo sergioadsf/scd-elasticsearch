@@ -13,7 +13,7 @@ public class ElasticJsonBuilder {
 		return this;
 	}
 
-	public ElasticJsonBuilder key(String key, boolean addQuotes) {
+	public ElasticJsonBuilder key(String key) {
 		this.sb.append("\"").append(key).append("\": { ");
 		return this;
 	}
