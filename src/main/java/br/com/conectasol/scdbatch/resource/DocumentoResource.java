@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.conectasol.scdbatch.service.DocumentoService;
-import br.com.conectasol.scdbatch.service.exception.CriarIndiceException;
 
 @RestController
 @RequestMapping("/documento")
@@ -20,10 +19,10 @@ public class DocumentoResource {
 	private DocumentoService documentoService;
 
 	@PostMapping("/{nome}")
-	public void criarIndice(String nome, @RequestBody String json) {
+	public void criarIndice(@RequestBody String json) {
 		try {
-			this.documentoService.bulk(nome, json);
-		} catch (IOException | CriarIndiceException e) {
+			this.documentoService.bulk(json);
+		} catch (IOException e) {
 			Logger.getRootLogger().error(e.getMessage(), e);
 		}
 	}

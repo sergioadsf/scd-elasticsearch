@@ -9,11 +9,6 @@ public class ElasticJsonBuilder {
 	}
 	
 	public ElasticJsonBuilder key(String key) {
-		this.key(key, true);
-		return this;
-	}
-
-	public ElasticJsonBuilder key(String key) {
 		this.sb.append("\"").append(key).append("\": { ");
 		return this;
 	}
