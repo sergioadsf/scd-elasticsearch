@@ -1,0 +1,28 @@
+version: "3.0"
+services: 
+  scd-elastic:
+    image: sergioadsf/scd-elastic:1.1
+    container_name: scd-elastic
+    ports: 
+      - "8083:8083"
+    depends_on: 
+      - elasticsearch
+    links: 
+      - elasticsearch
+    networks:
+      - scd-network
+
+  elasticsearch:
+    image: elasticsearch:6.3.2
+    container_name: elasticsearch
+    ports: 
+      - "9200:9200"
+      - "9300:9300"
+    volumes: 
+      - /opt/elasticsearch-6.3.1/data:/opt/elasticsearch-6.3.1/data
+    networks:
+      - scd-network
+
+networks: 
+  scd-network:
+    driver: bridge
