@@ -14,17 +14,23 @@ import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestClientBuilder;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.transport.TransportClient;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 
 import br.com.conectasol.scdbatch.util.CloseUtil;
+import br.com.conectasol.scdbatch.util.PathProperties;
 
-
-public abstract class AbsElasticService {
+@Configuration
+public class AbsElasticService {
+	
+	@Autowired
+	private PathProperties pathProperties; 
 
 	private static final int TIMEOUT = 60000;
 	protected ThreadPoolExecutor executor;
 
 	private RestClientBuilder createConnection() {
-		return RestClient.builder(new HttpHost("localhost", 9200))
+		return RestClient.builder(new HttpHost(pathProperties.getUrl(), Integer.valueOf(pathProperties.getPort())))
 				.setRequestConfigCallback(requestConfigBuilder -> requestConfigBuilder.setConnectTimeout(TIMEOUT).setSocketTimeout(TIMEOUT))
 				.setMaxRetryTimeoutMillis(TIMEOUT);
 	}
